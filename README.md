@@ -1,101 +1,147 @@
 ## Introduction
-The health monitoring application "POT" (平安通) represents a collaborative initiative between the Macau government and CTM (Companhia de Telecomunicações de Macau), where I was part of the development team at CTM. This project aims to enhance the health and safety of the elderly population in Macau by utilizing wearable technology to monitor health conditions in real time. My role in the project involved working closely with the technology stack, specifically focusing on implementing WebSockets for immediate data transmission. Insights gained from this experience will inform the analysis and recommendations detailed in this report.
+
+"POT" (平安通) is a health monitoring app that's a joint project between the Macau government and CTM (Companhia de Telecomunicações de Macau), my previous employer. I was part of the development team, working on making this app help keep the elderly in Macau safe and healthy. We use wearable tech to keep an eye on their health in real time.
 
 ## Section 1: REST and GraphQL for Data Requests and Updates
 ### REST for Data Requests and Updates
-In the health monitoring application POT (平安通), a partnership project with the Macau government and developed through my previous company, CTM, we can structure a REST API to manage data requests and updates effectively. The endpoints might include:
 
-GET /users/{id} : Retrieves user information such as health metrics and monitoring history for older citizens enrolled in the program.
-POST /users: Creates entries for new users (elderly participants) who start using the health monitor.
-PUT /users/{id} : Updates an existing user's health information based on insights or changes detected by the wearable device.
-DELETE /users/{id} : Removes a user from the system, for instance, if they have ceased using the device or passed away.
+In the POT health monitoring app, we use a REST API to handle data requests and updates between the management front-end and our microservices. Here are the main endpoints:
 
-For the POT application, even we didn't use GraphQL to build up the APIs, but it can be a powerful alternative to fetch specific health data. A GraphQL query could look something like this:
-```
-{
-  user(id: "1") {
-    id
-    name
-    healthMetrics {
-      heartRate
-      bloodPressure
-      oxygenSaturation
+* GET /users/{id}
+Fetches a user's info, including their health metrics and history.
+* POST /users
+Adds a new user when they start using the health monitor.
+* PUT /users/{id}
+Updates a user's health data based on new information from their wearable device.
+* DELETE /users/{id}
+Removes a user from the system if they stop using the device or pass away.
+
+Using a REST API for managing data in the POT app provides a straightforward and reliable way to handle user information and health metrics. It connects our front-end to the microservices efficiently, ensures the system can grow, and keeps data secure. This setup helps us deliver effective and real-time health monitoring for elderly users.
+
+### GraphQL for Data Requests and Updates
+
+Although we're currently using REST APIs, let's explore how **GraphQL** could enhance the **POT** health monitoring app for managing data requests and updates. With **GraphQL**, we can create a more flexible and efficient data retrieval system. Here's how it might look:
+
+- **Queries**:
+  - **Get User Information**:
+    ```graphql
+    query {
+      user(id: "123") {
+        id
+        name
+        healthMetrics {
+          heartRate
+          bloodPressure
+          lastUpdated
+        }
+      }
     }
-  }
-}
-```
+    ```
 
-An update operation could be performed as follows:
-```
-mutation {
-  updateUserHealthMetrics(id: "1", metrics: { heartRate: 72, bloodPressure: { systolic: 130, diastolic: 85 }, oxygenSaturation: 95 }) {
-    success
-    message
-  }
-}
-```
+- **Mutations**:
+  - **Add New User**:
+    ```graphql
+    mutation {
+      addUser(name: "John Doe", age: 70) {
+        id
+        name
+      }
+    }
+    ```
 
-### Comparison of REST versus GraphQL for the Health Monitoring Application "POT"
+  - **Update Health Data**:
+    ```graphql
+    mutation {
+      updateHealthMetrics(id: "123", heartRate: 72, bloodPressure: "120/80") {
+        id
+        healthMetrics {
+          heartRate
+          bloodPressure
+          lastUpdated
+        }
+      }
+    }
+    ```
 
-| Feature                | REST                                      | GraphQL                                   |
-|------------------------|-------------------------------------------|-------------------------------------------|
-| **Data Retrieval**     | Simple and straightforward; can lead to over-fetching. | Clients request exact data needed, reducing payload. |
-| **Endpoint Structure** | Clear endpoints for CRUD; requires multiple for different resources. | Single endpoint for various queries; initial setup is complex. |
-| **Efficiency**         | Benefits from HTTP caching; separate requests may create bottlenecks. | Aggregates data efficiently; requires optimization. |
-| **Real-time Capabilities** | Supports polling for updates; not primarily designed for real-time. | Supports real-time subscriptions but adds complexity. |
-| **Learning Curve**     | Easier for those familiar with HTTP; can become complex with relationships. | Streamlined interaction but has a steeper learning curve. |
+  - **Delete User**:
+    ```graphql
+    mutation {
+      deleteUser(id: "123") {
+        id
+        name
+      }
+    }
+    ```
 
-### Conclusion
+While we're currently leveraging REST APIs for the **POT** app, integrating **GraphQL** could offer greater flexibility and efficiency in data management. It allows for more precise data fetching, reduces the number of requests, and can enhance the overall developer experience. However, it's essential to weigh these benefits against the added complexity and ensure it aligns with our project's needs.
 
-In the **POT** (平安通) application, **REST** APIs effectively manage user data with a clear and maintainable structure. While GraphQL offers greater flexibility, its complexity may not be necessary for the project’s needs. The combination of REST for data management and WebSockets for real-time updates supports effective health monitoring for elderly citizens.
+
+### REST vs. GraphQL: Quick Comparison
+
+| **Aspect** | **REST** | **GraphQL** |
+|------------|----------|-------------|
+| **Pros**   | 1. **Simplicity:** Easy to understand and implement.<br>2. **Wide Adoption:** Lots of tools and community support. | 1. **Flexible Queries:** Fetch exactly the data you need.<br>2. **Single Endpoint:** Simplifies API management. |
+| **Con**    | **Over-fetching/Under-fetching:** Can retrieve too much or too little data. | **Complexity:** Harder to set up and learn compared to REST. |
+
+### **Conclusion**
+
+Both REST and GraphQL have their strengths. **REST** is great for straightforward applications with well-defined data needs, benefiting from its simplicity and extensive support. **GraphQL**, on the other hand, shines when you require flexible data retrieval and more efficient communication between client and server. Choose the one that best fits your project's complexity and requirements.
+
 
 ## Section 2: WebSockets for Real-time Communication
 
-In the **POT** (平安通) health monitoring application, WebSockets enable seamless real-time communication between wearable devices and the server. 
+### How We Use WebSockets
 
-### How WebSockets are Used in POT
+In our **POT (平安通)** app, we use **WebSockets** to handle real-time data between wearable devices and our system.
 
-1. **Persistent Connection**: Wearable devices establish a continuous WebSocket connection to the server, allowing ongoing data exchange.
+- **Data Sync:** 
+  - **Every Minute:** Wearables like smartwatches send health data to the system every minute.
+  
+- **Instant Alerts:**
+  - **Abnormal Data:** If the device detects something unusual, it sends an alert right away.
+  - **Emergency Response:** Our government monitoring center receives the alert and contacts emergency services immediately.
 
-2. **Immediate Data Sharing**: Vital health metrics (e.g., heart rate) are sent to the server at regular intervals, ensuring users' health data is always up-to-date.
+### WebSockets vs. REST and GraphQL
 
-3. **Real-time Alerts**: The server can push alerts directly to devices upon detecting abnormal health metrics (e.g., irregular heart rate), enabling quick responses.
-
-4. **Bidirectional Communication**: WebSockets allow two-way communication, so the server can send updates instantly, enhancing user engagement and safety.
-
-#### WebSockets vs. REST and GraphQL
-
-| Feature                    | WebSockets                  | REST                  | GraphQL               |
-|----------------------------|-----------------------------|-----------------------|-----------------------|
-| **Connection Type**        | Persistent, full-duplex.    | Stateless requests.    | Stateless requests.    |
-| **Data Flow**              | Real-time, bidirectional.   | Request-driven.        | Typically request-driven, with subscriptions. |
-| **Efficiency**             | Instant updates, low latency. | Can experience delays. | Flexible, but may require multiple queries. |
-| **Use Case Suitability**   | Ideal for live data and alerts. | Best for CRUD operations. | Good for complex queries, less suited for real-time without subscriptions. |
+| **Feature**       | **WebSockets**                          | **REST**                      | **GraphQL**                  |
+|-------------------|-----------------------------------------|-------------------------------|------------------------------|
+| **Real-time**     | Yes, keeps a constant connection        | No, needs polling              | No, same as REST              |
+| **Communication** | Two-way, both client and server can send data | One-way, client requests data | One-way, client requests data |
+| **Best For**      | Live updates and alerts                 | Standard data operations      | Flexible data queries        |
 
 ### Conclusion
 
-WebSockets are essential for real-time communication in the **POT** application, allowing immediate updates and alerts that enhance health monitoring for elderly users. Unlike REST and GraphQL, WebSockets support a persistent connection and bidirectional data flow, making them suitable for applications that require instant communication and quick interventions.
+WebSockets are essential for real-time communication in the POT application, allowing immediate updates and alerts that enhance health monitoring for elderly users. Unlike REST and GraphQL, WebSockets support a persistent connection and bidirectional data flow, making them suitable for applications that require instant communication and quick interventions.
 
 
 ## Section 3: Technology Recommendation and Justification
 
-For the **POT** (平安通) health monitoring application, I recommend a **hybrid approach** using **REST APIs** for data management and **WebSockets** for real-time communication. And currently the company using this structure.
+### **Our Technology Choice: REST APIs + WebSockets**
 
-### Justification for the Hybrid Approach
+For our **POT (平安通)** health monitoring system, we've built a **hybrid architecture** using **REST APIs** for data management and **WebSockets** for real-time communication.
 
-1. **Data Complexity**:
-   - **REST APIs** provide a clear structure for managing user data, simplifying CRUD operations, which is essential for health records.
-   - **WebSockets** enable real-time updates from wearable devices, enhancing user interaction without added complexity.
+### **Why This Combination Works**
 
-2. **Real-time Requirements**:
-   - WebSockets excel in providing instant notifications and alerts for abnormal health conditions, crucial for timely interventions.
+- **Data Management with REST APIs:**
+  - **Structured Operations:** REST handles standard CRUD operations efficiently, making it easy to manage user data and health records.
+  - **Simplicity & Support:** Widely adopted with extensive resources, ensuring smooth development and maintenance.
 
-3. **Scalability**:
-   - REST APIs can scale efficiently by adding new endpoints, while WebSockets can handle many concurrent connections, supporting a growing user base.
+- **Real-time Communication with WebSockets:**
+  - **Instant Updates:** WebSockets keep a constant connection, allowing wearables to send health data every minute and send immediate alerts if something goes wrong.
+  - **Two-way Communication:** Enables both the devices and the system to communicate seamlessly, crucial for timely emergency responses.
 
-4. **Ease of Use for Developers**:
-   - REST's simplicity is familiar to many developers, facilitating faster implementation. While WebSockets introduce complexity, they are manageable with existing libraries.
+- **Scalability:**
+  - **Efficient Handling:** REST APIs manage numerous requests without issues, while WebSockets maintain persistent connections without overloading the server.
+  - **Flexible Growth:** Each technology can scale independently based on the system's needs.
 
-### Conclusion
+- **Developer-Friendly:**
+  - **Easy Integration:** Combining REST and WebSockets leverages the strengths of both, keeping the development process straightforward.
+  - **Resource Availability:** Plenty of libraries and tools are available for both technologies, speeding up development.
 
-This hybrid approach balances structured data management with robust real-time capabilities, optimizing performance and scalability. It ensures that users receive timely alerts and updates, making it ideal for the health monitoring needs of elderly citizens. 
+### **Benefits of Our Hybrid Approach**
+
+Our hybrid approach leverages the strengths of both **REST APIs** and **WebSockets** to optimize our system. **REST APIs** are used for the management front-end to communicate with microservices, handling everyday data tasks easily with lots of community support. Meanwhile, **WebSockets** manage communication with wearable devices, allowing us to monitor health data in real time and send instant alerts. This mix boosts performance, scales smoothly as we grow, and makes it easier for our team to develop and maintain the system.
+
+### **Conclusion**
+
+By combining **REST APIs** with **WebSockets**, our **POT** system effectively manages both reliable data handling and real-time communication. This hybrid approach ensures high performance, scalability, and the ability to respond instantly to critical health events, perfectly aligning with our goal of providing a safe and responsive health monitoring solution.
