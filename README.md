@@ -1,11 +1,11 @@
 ## Introduction
 
-"POT" (平安通) is a health monitoring app that's a joint project between the Macau government and CTM (Companhia de Telecomunicações de Macau), my previous employer. I was part of the development team, working on making this app help keep the elderly in Macau safe and healthy. We use wearable tech to keep an eye on their health in real time.
+"POT" (平安通) is a health monitoring project that's a joint project between the Macau government and CTM (Companhia de Telecomunicações de Macau), my previous employer. I was part of the development team, working on making this system help keep the elderly in Macau safe and healthy. We use wearable tech to keep an eye on their health in real time.
 
 ## Section 1: REST and GraphQL for Data Requests and Updates
 ### REST for Data Requests and Updates
 
-In the POT health monitoring app, we use a REST API to handle data requests and updates between the management front-end and our microservices. Here are the main endpoints:
+In the POT, we use a REST API to handle data requests and updates between the management front-end and our microservices. Here are the main endpoints:
 
 * GET /users/{id}
 Fetches a user's info, including their health metrics and history.
@@ -16,11 +16,11 @@ Updates a user's health data based on new information from their wearable device
 * DELETE /users/{id}
 Removes a user from the system if they stop using the device or pass away.
 
-Using a REST API for managing data in the POT app provides a straightforward and reliable way to handle user information and health metrics. It connects our front-end to the microservices efficiently, ensures the system can grow, and keeps data secure. This setup helps us deliver effective and real-time health monitoring for elderly users.
+Using a REST API for managing data in the POT provides a straightforward and reliable way to handle user information and health metrics. It connects our front-end to the microservices efficiently, ensures the system can grow, and keeps data secure. This setup helps us deliver effective and real-time health monitoring for elderly users.
 
 ### GraphQL for Data Requests and Updates
 
-Although we're currently using REST APIs, let's explore how **GraphQL** could enhance the **POT** health monitoring app for managing data requests and updates. With **GraphQL**, we can create a more flexible and efficient data retrieval system. Here's how it might look:
+Although we're currently using REST APIs, let's explore how **GraphQL** could enhance the **POT** health monitoring system for managing data requests and updates. With **GraphQL**, we can create a more flexible and efficient data retrieval system. Here's how it might look:
 
 - **Queries**:
   - **Get User Information**:
@@ -73,7 +73,7 @@ Although we're currently using REST APIs, let's explore how **GraphQL** could en
     }
     ```
 
-While we're currently leveraging REST APIs for the **POT** app, integrating **GraphQL** could offer greater flexibility and efficiency in data management. It allows for more precise data fetching, reduces the number of requests, and can enhance the overall developer experience. However, it's essential to weigh these benefits against the added complexity and ensure it aligns with our project's needs.
+While we're currently leveraging REST APIs for the **POT** , integrating **GraphQL** could offer greater flexibility and efficiency in data management. It allows for more precise data fetching, reduces the number of requests, and can enhance the overall developer experience. However, it's essential to weigh these benefits against the added complexity and ensure it aligns with our project's needs.
 
 
 ### REST vs. GraphQL: Quick Comparison
@@ -92,7 +92,7 @@ Both REST and GraphQL have their strengths. **REST** is great for straightforwar
 
 ### How We Use WebSockets
 
-In our **POT (平安通)** app, we use **WebSockets** to handle real-time data between wearable devices and our system.
+In our **POT (平安通)**, we use **WebSockets** to handle real-time data between wearable devices and our system.
 
 - **Data Sync:** 
   - **Every Minute:** Wearables like smartwatches send health data to the system every minute.
