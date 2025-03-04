@@ -5,7 +5,7 @@
 ## Section 1: REST and GraphQL for Data Requests and Updates
 ### REST for Data Requests and Updates
 
-In the POT, we use a REST API to handle data requests and updates between the management front-end and our microservices. Here are the main endpoints:
+In the POT, we use a REST API to handle data requests and updates between the management front-end and our microservices. Here are the main endpoints:  
 [Genderated by AI, because of the real APIs is belong to my previous company and no allows be disclose]
 
 * GET /users/{id}
@@ -21,7 +21,7 @@ Using a REST API for managing data in the POT provides a straightforward and rel
 
 ### GraphQL for Data Requests and Updates
 
-Although we're currently using REST APIs, let's explore how **GraphQL** could enhance the **POT** health monitoring system for managing data requests and updates. With **GraphQL**, we can create a more flexible and efficient data retrieval system. Here's how it might look:
+Although we're currently using REST APIs, let's explore how **GraphQL** could enhance the **POT** health monitoring system for managing data requests and updates. With **GraphQL**, we can create a more flexible and efficient data retrieval system. Here's how it might look:  
 [Genderated by AI, because of the data structure is belong to my previous compnay and no allows be disclose]
 - **Queries**:
   - **Get User Information**:
@@ -77,14 +77,14 @@ Although we're currently using REST APIs, let's explore how **GraphQL** could en
 While we're currently leveraging REST APIs for the **POT** , integrating **GraphQL** could offer greater flexibility and efficiency in data management. It allows for more precise data fetching, reduces the number of requests, and can enhance the overall developer experience. However, it's essential to weigh these benefits against the added complexity and ensure it aligns with our project's needs.
 
 
-### REST vs. GraphQL: Quick Comparison
+### REST vs. GraphQL: Quick Comparison  
 [We firstly list the points and AI help to format it and make into a table]
 | **Aspect** | **REST** | **GraphQL** |
 |------------|----------|-------------|
 | **Pros**   | 1. **Simplicity:** Easy to understand and implement.<br>2. **Wide Adoption:** Lots of tools and community support. | 1. **Flexible Queries:** Fetch exactly the data you need.<br>2. **Single Endpoint:** Simplifies API management. |
 | **Con**    | **Over-fetching/Under-fetching:** Can retrieve too much or too little data. | **Complexity:** Harder to set up and learn compared to REST. |
 
-### **Conclusion**
+### **Conclusion**  
 [We firstly list the points and AI help to make the conclusion smoothly]
 Both REST and GraphQL have their strengths. **REST** is great for straightforward applications with well-defined data needs, benefiting from its simplicity and extensive support. **GraphQL**, on the other hand, shines when you require flexible data retrieval and more efficient communication between client and server. Choose the one that best fits your project's complexity and requirements.
 
@@ -102,7 +102,7 @@ In our **POT (平安通)**, we use **WebSockets** to handle real-time data betwe
   - **Abnormal Data:** If the device detects something unusual, it sends an alert right away.
   - **Emergency Response:** Our government monitoring center receives the alert and contacts emergency services immediately.
 
-### WebSockets vs. REST and GraphQL
+### WebSockets vs. REST and GraphQL  
 [We firstly list the points and AI help to format it and make into a table]
 | **Feature**       | **WebSockets**                          | **REST**                      | **GraphQL**                  |
 |-------------------|-----------------------------------------|-------------------------------|------------------------------|
@@ -139,10 +139,10 @@ For our **POT (平安通)** health monitoring system, we've built a **hybrid arc
   - **Easy Integration:** Combining REST and WebSockets leverages the strengths of both, keeping the development process straightforward.
   - **Resource Availability:** Plenty of libraries and tools are available for both technologies, speeding up development.
 
-### **Benefits of Our Hybrid Approach**
+### **Benefits of Our Hybrid Approach**  
 [We firstly list the points and AI help to make the conclusion smoothly]
 Our hybrid approach leverages the strengths of both **REST APIs** and **WebSockets** to optimize our system. **REST APIs** are used for the management front-end to communicate with microservices, handling everyday data tasks easily with lots of community support. Meanwhile, **WebSockets** manage communication with wearable devices, allowing us to monitor health data in real time and send instant alerts. This mix boosts performance, scales smoothly as we grow, and makes it easier for our team to develop and maintain the system.
 
-### **Conclusion**
+### **Conclusion**  
 [We firstly list the points and AI help to make the conclusion smoothly]
 By combining **REST APIs** with **WebSockets**, our **POT** system effectively manages both reliable data handling and real-time communication. This hybrid approach ensures high performance, scalability, and the ability to respond instantly to critical health events, perfectly aligning with our goal of providing a safe and responsive health monitoring solution.
