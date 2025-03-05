@@ -1,3 +1,6 @@
+Group_10
+Group member: XuHui Liang, Cong Zhao
+
 ## Introduction
 
 "POT" (平安通) is a health monitoring project that's a joint project between the Macau government and CTM (Companhia de Telecomunicações de Macau), my previous employer. I was part of the development team, working on making this system help keep the elderly in Macau safe and healthy. We use wearable tech to keep an eye on their health in real time.
